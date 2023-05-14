@@ -1,4 +1,4 @@
-import { ApolloServer, gql } from "apollo-server";
+const { ApolloServer, gql } = require("apollo-server");
 
 // スキーマ定義
 const typeDefs = gql`
