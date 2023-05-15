@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useQuery, gql } from "@apollo/client";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// GraphQLクエリを定義。helloフィールドをリクエスト
+// gqlはGraphQLクエリをパースできる（GraphQLクエリをJavaScript内で書くことができる）
+const HELLO_QUERY = gql`
+  query GetHello {
+    hello
+  }
+`;
+
+const App: React.FC = () => {
+  // useQueryフックを用いてGraphQLクエリを実行して結果を取得
+  const { loading, error, data } = useQuery(HELLO_QUERY);
+
+  // クエリがロード中の場合
+  if (loading) return <p>ローディング中</p>;
+  // クエリの実行中にエラーが発生した場合
+  if (error) return <p>エラー</p>;
+  // クエリが成功した場合
+  return <h1>{data.hello}</h1>;
+};
 
 export default App;
