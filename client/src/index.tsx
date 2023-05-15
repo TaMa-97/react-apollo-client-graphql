@@ -1,19 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+// Apollo Clientの設定
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql", // GraphQLサーバーのエンドポイントを指定する
+  cache: new InMemoryCache(), // Apollo Clientのデータキャッシュを設定する
+});
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
+
+// ApolloProviderでApollo ClientをReactアプリケーションに統合する
+// どのコンポーネントからでもApollo Clientを使ってGraphQL APIと通信できるようにする
 root.render(
   <React.StrictMode>
-    <App />
+    {/* client（インスタンス）を渡すのは必須 */}
+    <ApolloProvider client={client}> 
+      <App />
+    </ApolloProvider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
