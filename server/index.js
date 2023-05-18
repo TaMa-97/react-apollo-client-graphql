@@ -22,6 +22,7 @@ const resolvers = {
   // Mutation（GraphQL）：サーバー上のデータを変更する操作
   Mutation: {
     addMessage: (_, { message }) => {
+      console.log(`テスト用: ${message}`);
       //第一引数は現在のオブジェクトの状態、第二引数はクライアントから送られてくるデータ
       // メッセージを追加するリゾルバ
       messages.push(message);
